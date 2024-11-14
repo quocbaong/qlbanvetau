@@ -189,11 +189,13 @@ public class GD_ThongKeLuotVe extends javax.swing.JPanel {
         	jPanel2Layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(jPanel2Layout.createSequentialGroup()
         			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 285, GroupLayout.PREFERRED_SIZE)
-        			.addContainerGap(59, Short.MAX_VALUE))
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
         	jPanel2Layout.createParallelGroup(Alignment.LEADING)
-        		.addComponent(jScrollPane1, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        		.addGroup(jPanel2Layout.createSequentialGroup()
+        			.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 384, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(133, Short.MAX_VALUE))
         );
         jPanel2.setLayout(jPanel2Layout);
 
@@ -231,22 +233,19 @@ public class GD_ThongKeLuotVe extends javax.swing.JPanel {
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        				.addGroup(layout.createSequentialGroup()
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addComponent(jLabel1, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1563, GroupLayout.PREFERRED_SIZE)
+        				.addGroup(Alignment.LEADING, layout.createSequentialGroup()
         					.addGap(15)
-        					.addGroup(layout.createParallelGroup(Alignment.TRAILING, false)
-        						.addGroup(layout.createSequentialGroup()
-        							.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-        								.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        								.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 239, Short.MAX_VALUE))
-        							.addPreferredGap(ComponentPlacement.UNRELATED)
-        							.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
-        							.addPreferredGap(ComponentPlacement.RELATED)
-        							.addComponent(panelBarChart, GroupLayout.PREFERRED_SIZE, 695, GroupLayout.PREFERRED_SIZE)
-        							.addGap(338))
-        						.addComponent(chartPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-        				.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 1563, GroupLayout.PREFERRED_SIZE))
-        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        						.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        						.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 239, Short.MAX_VALUE))
+        					.addPreferredGap(ComponentPlacement.UNRELATED)
+        					.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 305, GroupLayout.PREFERRED_SIZE)
+        					.addPreferredGap(ComponentPlacement.RELATED)
+        					.addComponent(panelBarChart, GroupLayout.PREFERRED_SIZE, 570, GroupLayout.PREFERRED_SIZE))
+        				.addComponent(chartPanel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 1160, GroupLayout.PREFERRED_SIZE))
+        			.addContainerGap())
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
@@ -255,15 +254,15 @@ public class GD_ThongKeLuotVe extends javax.swing.JPanel {
         			.addPreferredGap(ComponentPlacement.RELATED)
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        					.addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
-        					.addComponent(panelBarChart, GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE))
+        					.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 418, GroupLayout.PREFERRED_SIZE)
+        					.addComponent(panelBarChart, GroupLayout.PREFERRED_SIZE, 428, GroupLayout.PREFERRED_SIZE))
         				.addGroup(layout.createSequentialGroup()
         					.addComponent(jPanel3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
         			.addPreferredGap(ComponentPlacement.RELATED)
-        			.addComponent(chartPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        			.addContainerGap())
+        			.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, 289, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(19, Short.MAX_VALUE))
         );
         this.setLayout(layout);
 
@@ -275,20 +274,26 @@ public class GD_ThongKeLuotVe extends javax.swing.JPanel {
 
 	private void jMonthChooser1PropertyChange(java.beans.PropertyChangeEvent evt) {// GEN-FIRST:event_jMonthChooser1PropertyChange
 		DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+		
+		
+		
+		
 		int tongSoLuotVe = 0;
-		for (int i = 1; i <= 31; i++) {
+		for (int i = 1; i <= 30; i++) {
+//			chỗ này +1 => +2
 			dataset.setValue(
-					((Long) veDao.layTongVeTrongNgay(jYearChooser1.getYear(), jMonthChooser1.getMonth() + 1, i))
+					((Long) veDao.layTongVeTrongNgay(jYearChooser1.getYear(), jMonthChooser1.getMonth() + 2, i))
 							.intValue(),
 					"Ngày", i + "");
-			tongSoLuotVe += ((Long) veDao.layTongVeTrongNgay(jYearChooser1.getYear(), jMonthChooser1.getMonth() + 1, i))
+			tongSoLuotVe += ((Long) veDao.layTongVeTrongNgay(jYearChooser1.getYear(), jMonthChooser1.getMonth() + 2, i))
 					.intValue();
 		}
 
 		//=================BIỂU ĐỒ CỘT====================
 		JFreeChart chart = ChartFactory.createBarChart("", "Tháng " + (jMonthChooser1.getMonth() + 1),
 				"Số lượng vé đã bán", dataset, PlotOrientation.VERTICAL, false, true, false);
-
+ 
 		CategoryPlot categoryPlot = chart.getCategoryPlot();
 		categoryPlot.setBackgroundPaint(Color.WHITE);
 		categoryPlot.setOutlineVisible(false);
@@ -336,7 +341,7 @@ public class GD_ThongKeLuotVe extends javax.swing.JPanel {
         piePlot.setBackgroundPaint(Color.white);
         piePlot.setOutlineVisible(false);
         piePlot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} {1} ({2})"));
-//        piePlot.setLabelPaint(Color.BLUE);
+        piePlot.setLabelPaint(Color.BLUE);
         piePlot.setLabelBackgroundPaint(Color.cyan);
         piePlot.setLabelFont(new Font("Conslas", Font.ITALIC, 16));
         
@@ -368,8 +373,8 @@ public class GD_ThongKeLuotVe extends javax.swing.JPanel {
 	public Map<String, Long> getVeCountByGaChieuDiChieuDen() {
         List<Ve> veList = veDao.layDSVe();
         Map<String, Long> gaCountMap = new HashMap<>();
-
-        int month = jMonthChooser1.getMonth()+1;
+// 		chỗ này như trên
+        int month = jMonthChooser1.getMonth()+2;
         int year = jYearChooser1.getYear();
         
         for (Ve ve : veList) {

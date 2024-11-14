@@ -23,7 +23,7 @@ public class GD_TraCuuKhuyenMai extends javax.swing.JPanel {
 
 	public GD_TraCuuKhuyenMai(EntityManagerFactory emf) {
 		initComponents();
-		setBorder(new EmptyBorder(10, 10, 10, 10));
+		setBorder(new EmptyBorder(10, 10, 10, 10)); 
 
 		btnTraCuuKhuyenMai.addActionListener(new ActionListener() {
 			@Override

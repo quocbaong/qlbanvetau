@@ -156,7 +156,6 @@ public class FormTraCuuNhanVien extends javax.swing.JPanel {
         jtCCCD.setFont(new java.awt.Font("SansSerif", 0, 16)); // NOI18N
         jtCCCD.setPreferredSize(new java.awt.Dimension(64, 40));
 
-        btnTraCuu.setBackground(new java.awt.Color(0, 199, 255));
         btnTraCuu.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
         btnTraCuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search2.png"))); // NOI18N
         btnTraCuu.setText("Tra Cứu");
@@ -170,7 +169,6 @@ public class FormTraCuuNhanVien extends javax.swing.JPanel {
             }
         });
 
-        btnXoaTrang.setBackground(new java.awt.Color(0, 199, 255));
         btnXoaTrang.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
         btnXoaTrang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/tay.png"))); // NOI18N
         btnXoaTrang.setText("Xóa Trắng");
@@ -198,7 +196,6 @@ public class FormTraCuuNhanVien extends javax.swing.JPanel {
             }
         });
 
-        btnLoc.setBackground(new java.awt.Color(0, 199, 255));
         btnLoc.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
         btnLoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loc.png"))); // NOI18N
         btnLoc.setText("Lọc");

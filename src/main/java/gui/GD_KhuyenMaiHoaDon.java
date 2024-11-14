@@ -237,7 +237,6 @@ public class GD_KhuyenMaiHoaDon extends javax.swing.JPanel {
                                                                                                                 );
         btnTim = new javax.swing.JButton();
         
-                btnTim.setBackground(new java.awt.Color(0, 199, 255));
                 btnTim.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
                 btnTim.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search2.png"))); // NOI18N
                 btnTim.setText("Tìm");
@@ -251,7 +250,6 @@ public class GD_KhuyenMaiHoaDon extends javax.swing.JPanel {
                 });
         btnLoc = new javax.swing.JButton();
         
-                btnLoc.setBackground(new java.awt.Color(0, 199, 255));
                 btnLoc.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
                 btnLoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loc.png"))); // NOI18N
                 btnLoc.setText("Lọc");
@@ -265,7 +263,6 @@ public class GD_KhuyenMaiHoaDon extends javax.swing.JPanel {
                 });
         btnXoaT = new javax.swing.JButton();
         
-                btnXoaT.setBackground(new java.awt.Color(0, 199, 255));
                 btnXoaT.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
                 btnXoaT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/tay.png"))); // NOI18N
                 btnXoaT.setText("Xóa trắng");
@@ -279,7 +276,6 @@ public class GD_KhuyenMaiHoaDon extends javax.swing.JPanel {
                 });
         btnTamN = new javax.swing.JButton();
         
-                btnTamN.setBackground(new java.awt.Color(0, 199, 255));
                 btnTamN.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
                 btnTamN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/pause.png"))); // NOI18N
                 btnTamN.setText("Tạm ngưng");
@@ -293,7 +289,6 @@ public class GD_KhuyenMaiHoaDon extends javax.swing.JPanel {
                 });
         btnThem = new javax.swing.JButton();
         
-                btnThem.setBackground(new java.awt.Color(0, 199, 255));
                 btnThem.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
                 btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/add.png"))); // NOI18N
                 btnThem.setText("Thêm");
@@ -307,7 +302,6 @@ public class GD_KhuyenMaiHoaDon extends javax.swing.JPanel {
                 });
         btnCapN = new javax.swing.JButton();
         
-                btnCapN.setBackground(new java.awt.Color(0, 199, 255));
                 btnCapN.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
                 btnCapN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/update.png"))); // NOI18N
                 btnCapN.setText("Cập nhật");

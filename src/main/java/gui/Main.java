@@ -152,9 +152,9 @@ public class Main extends javax.swing.JFrame {
 
 		});
 		menu.initMenuItem();
-		bg.add(menu, "w 300!, spany 2");
+		bg.add(menu, "w 265!, spany 2");
 		//bg.add(herder, "h 100!,wrap");
-		bg.add(main, "w 100%, h 50%");
+		bg.add(main, "w 100%, h 80%");
 		main.add(new GD_Chinh());
 	}
 	// <editor-fold defaultstate="collapsed" desc="Generated

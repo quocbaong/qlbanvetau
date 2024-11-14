@@ -105,28 +105,21 @@ public class GD_DoiTra extends javax.swing.JPanel {
 		scrollVe.setVerticalScrollBar(new ScrollBar());
 		((DefaultTableCellRenderer) tableVe.getTableHeader().getDefaultRenderer())
 				.setHorizontalAlignment(JLabel.CENTER);
-		btnTimHD.setBackground(new java.awt.Color(0, 199, 255));
 		btnTimHD.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
 		btnTimHD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search2.png"))); // NOI18N
-		btnXoaT.setBackground(new java.awt.Color(0, 199, 255));
 		btnXoaT.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
-		btnXoaT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/xoaTrang.png"))); // NOI18N
-		btnTimV.setBackground(new java.awt.Color(0, 199, 255));
+		btnXoaT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/tay.png"))); // NOI18N
 		btnTimV.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
 		btnTimV.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search2.png"))); // NOI18N
-		btnInHoaDon.setBackground(new java.awt.Color(0, 199, 255));
 		btnInHoaDon.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
 		btnInHoaDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/printer.png"))); // NOI18N
-		btnInVe.setBackground(new java.awt.Color(0, 199, 255));
 		btnInVe.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
 		btnInVe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/printer.png"))); // NOI18N
 		btnTraHD.setText("Trả tập vé");
-		btnTraHD.setBackground(new java.awt.Color(0, 199, 255));
 		btnTraHD.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
-		btnTraHD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/paper.png"))); // NOI18N
-		btnTra.setBackground(new java.awt.Color(0, 199, 255));
+		btnTraHD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/document.png"))); // NOI18N
 		btnTra.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
-		btnTra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/document.png"))); // NOI18N
+		btnTra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/paper.png"))); // NOI18N
 
 		renderHoaDon();
 
@@ -726,7 +719,7 @@ public class GD_DoiTra extends javax.swing.JPanel {
 	protected void paintChildren(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		GradientPaint g3 = new GradientPaint(0, 0, Color.decode("#085d81"), 0, getHeight(), Color.decode("#085d81"));
+		GradientPaint g3 = new GradientPaint(0, 0, Color.decode("#6699CC"), 0, getHeight(), Color.decode("#6699CC"));
 		g2.setPaint(g3);
 		g2.fillRoundRect(0, 0, getWidth(), getHeight(), 0, 0);
 		super.paintChildren(g);

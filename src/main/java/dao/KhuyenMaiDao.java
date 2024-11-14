@@ -88,7 +88,7 @@ public class KhuyenMaiDao {
         // Thêm phương thức để lấy danh sách khuyến mãi trong một khoảng thời gian
     public List<KhuyenMai> getKhuyenMaiByTimeRange(Date startTime, Date endTime) {
         return em.createQuery("SELECT km FROM KhuyenMai km WHERE km.thoiGianBatDau >= :startTime AND km.thoiGianKetThuc <= :endTime", KhuyenMai.class)
-                .setParameter("startTime", startTime)
+                .setParameter("startTime", startTime) 
                 .setParameter("endTime", endTime)
                 .getResultList();
     }

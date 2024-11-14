@@ -22,6 +22,10 @@ import net.miginfocom.swing.MigLayout;
 import swing.MenuAnimation;
 import swing.MenuItem;
 import swing.ScrollBarCustom;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.Dimension;
 
 public class Menu extends javax.swing.JPanel {
 
@@ -125,7 +129,7 @@ public class Menu extends javax.swing.JPanel {
         panel = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(300, 1100));
+        setPreferredSize(new Dimension(282, 1100));
 
         Logo.setOpaque(false);
         Logo.setPreferredSize(new java.awt.Dimension(300, 300));
@@ -138,15 +142,17 @@ public class Menu extends javax.swing.JPanel {
         });
 
         javax.swing.GroupLayout LogoLayout = new javax.swing.GroupLayout(Logo);
-        Logo.setLayout(LogoLayout);
         LogoLayout.setHorizontalGroup(
-            LogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbIcon)
+        	LogoLayout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(LogoLayout.createSequentialGroup()
+        			.addComponent(lbIcon, GroupLayout.PREFERRED_SIZE, 279, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(21, Short.MAX_VALUE))
         );
         LogoLayout.setVerticalGroup(
-            LogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        	LogoLayout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(lbIcon, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+        Logo.setLayout(LogoLayout);
 
         sp.setBorder(null);
         sp.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -177,22 +183,22 @@ public class Menu extends javax.swing.JPanel {
         sp.setViewportView(panel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Logo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(sp, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addComponent(sp, GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        		.addGroup(layout.createSequentialGroup()
+        			.addComponent(Logo, GroupLayout.PREFERRED_SIZE, 278, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(32, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Logo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(sp, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+        	layout.createParallelGroup(Alignment.LEADING)
+        		.addGroup(layout.createSequentialGroup()
+        			.addComponent(Logo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(sp, GroupLayout.PREFERRED_SIZE, 666, GroupLayout.PREFERRED_SIZE)
+        			.addContainerGap(128, Short.MAX_VALUE))
         );
+        this.setLayout(layout);
     }
 
     private void lbIconMouseClicked(java.awt.event.MouseEvent evt) {

@@ -48,7 +48,7 @@ public class FormTraCuuKhuyenMai extends javax.swing.JPanel {
         formThongTin.setBorder(new EmptyBorder(0, 0, 0, 0));
         formThongTin.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.WHITE),
                 "Thông tin khuyến mãi", 0, HEIGHT, new Font(Font.SANS_SERIF, Font.BOLD, 20) {
-        }, Color.WHITE));
+        }, Color.WHITE)); 
         tableTraCuuKM.setShowGrid(false);
         tableTraCuuKM.setShowHorizontalLines(false);
         tableTraCuuKM.setShowVerticalLines(false);
@@ -202,7 +202,6 @@ public class FormTraCuuKhuyenMai extends javax.swing.JPanel {
         jNgayKetThucKM.setPreferredSize(new java.awt.Dimension(88, 40));
         jNgayKetThucKM.setDateFormatString("dd/MM/yyyy");
 
-        btnXoaTrang.setBackground(new java.awt.Color(0, 199, 255));
         btnXoaTrang.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
         btnXoaTrang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/tay.png"))); // NOI18N
         btnXoaTrang.setText("Xóa Trắng");
@@ -216,7 +215,6 @@ public class FormTraCuuKhuyenMai extends javax.swing.JPanel {
             }
         });
 
-        btnTraCuu.setBackground(new java.awt.Color(0, 199, 255));
         btnTraCuu.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
         btnTraCuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/search2.png"))); // NOI18N
         btnTraCuu.setText("Tra cứu");
@@ -230,7 +228,6 @@ public class FormTraCuuKhuyenMai extends javax.swing.JPanel {
             }
         });
 
-        btnLocTheoNgay.setBackground(new java.awt.Color(0, 199, 255));
         btnLocTheoNgay.setFont(new java.awt.Font("SansSerif", 1, 20)); // NOI18N
         btnLocTheoNgay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/loc.png"))); // NOI18N
         btnLocTheoNgay.setText("Lọc");

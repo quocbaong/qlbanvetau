@@ -33,7 +33,6 @@ public class LoginScreen extends javax.swing.JFrame {
     /*    @SuppressWarnings("unchecked");*/
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jLabel12 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();

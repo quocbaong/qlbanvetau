@@ -77,15 +77,107 @@ public class GD_ThongKeDoanhThu extends javax.swing.JPanel {
         addDataTable(list);
 	}
         
-        private void addDataTable(List<HoaDon> list) {
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		model.setRowCount(0);
-		for (HoaDon hoaDon : list) {
-			Object[] row = {hoaDon.getMaHoaDon(), hoaDon.getNhanVien().getMaNhanVien(), hoaDon.getKhachHang().getCccd(), dinhDangNgay.format(hoaDon.getNgayTao()),
-                            dinhDangGio.format(hoaDon.getGioTao())};
-			model.addRow(row);
-		}
-		model.fireTableDataChanged();
+	private void addDataTable(List<HoaDon> list) {
+	    DefaultTableModel model = (DefaultTableModel) table.getModel();
+	    model.setRowCount(0); // Xóa dữ liệu cũ
+
+	    DecimalFormat dtf = new DecimalFormat("#,##0 VNĐ");
+
+	    for (HoaDon hoaDon : list) {
+	        // Tính tổng tiền cho hóa đơn hiện tại
+	        double tongTienHoaDon = tinhTongTienTheoHoaDon(hoaDon);
+
+	        // Định dạng tổng tiền
+	        String tongTienStr = dtf.format(tongTienHoaDon);
+
+	        // Tạo hàng dữ liệu với tổng tiền
+	        Object[] row = {
+	            hoaDon.getMaHoaDon(),
+	            hoaDon.getNhanVien().getMaNhanVien(),
+	            hoaDon.getKhachHang().getCccd(),
+	            dinhDangNgay.format(hoaDon.getNgayTao()),
+	            dinhDangGio.format(hoaDon.getGioTao()),
+	            tongTienStr
+	        };
+	        model.addRow(row);
+	    }
+	    model.fireTableDataChanged(); // Cập nhật bảng
+	}
+
+//        private double tinhTongTienTheoHoaDon(HoaDon hoaDon) {
+//            double tongTien = 0;
+//            List<Ve> listVe = hoaDon.getListVes();
+//
+//            for (Ve ve : listVe) {
+//                if (!ve.isTrangThai())
+//                    continue;
+//
+//                Set<ChiTietVe> listChiTietVes = ve.getLisChiTietVes();
+//                Ga gaChieuDi = null;
+//                Ga gaChieuDen = null;
+//
+//                for (ChiTietVe ctv : listChiTietVes) {
+//                    if (ctv.isChieu())
+//                        gaChieuDi = ctv.getGa();
+//                    else
+//                        gaChieuDen = ctv.getGa();
+//                }
+//
+//                tongTien += ve.getChoNgoi().getGia() * Math.abs(gaChieuDen.getId() - gaChieuDi.getId())
+//                        * (ve.getKhuyenMai() == null ? 1 : 1 - ve.getKhuyenMai().getChietKhau());
+//            }
+//
+//            Set<KhuyenMai> listKhuyenMai = hoaDon.getLisKhuyenMais();
+//            double km = 0;
+//
+//            for (KhuyenMai khuyenMai : listKhuyenMai) {
+//                km += khuyenMai.getChietKhau();
+//            }
+//
+//            return tongTien * (1 - km);
+//        }
+
+	private double tinhTongTienTheoHoaDon(HoaDon hoaDon) {
+	    double tongTien = 0;
+	    List<Ve> listVe = hoaDon.getListVes();
+
+	    for (Ve ve : listVe) {
+	        if (!ve.isTrangThai()) {
+	            continue; // Bỏ qua vé không hợp lệ
+	        }
+
+	        Set<ChiTietVe> listChiTietVes = ve.getLisChiTietVes();
+	        Ga gaChieuDi = null;
+	        Ga gaChieuDen = null;
+
+	        // Lấy thông tin ga khởi hành và ga đến
+	        for (ChiTietVe ctv : listChiTietVes) {
+	            if (ctv.isChieu()) {
+	                gaChieuDi = ctv.getGa(); // Gán ga khởi hành
+	            } else {
+	                gaChieuDen = ctv.getGa(); // Gán ga đến
+	            }
+	        }
+
+	        // Kiểm tra xem gaChieuDi và gaChieuDen có khác null không
+	        if (gaChieuDi != null && gaChieuDen != null) {
+	            // Tính tiền vé nếu cả hai ga đều hợp lệ
+	            tongTien += ve.getChoNgoi().getGia() * Math.abs(gaChieuDen.getId() - gaChieuDi.getId())
+	                    * (ve.getKhuyenMai() == null ? 1 : 1 - ve.getKhuyenMai().getChietKhau());
+	        } else {
+	            // Xử lý trường hợp gaChieuDi hoặc gaChieuDen là null nếu cần
+	            System.err.println("Warning: One of the Ga objects is null for Ve: " + ve);
+	        }
+	    }
+
+	    Set<KhuyenMai> listKhuyenMai = hoaDon.getLisKhuyenMais();
+	    double km = 0;
+
+	    for (KhuyenMai khuyenMai : listKhuyenMai) {
+	        km += khuyenMai.getChietKhau();
+	    }
+
+	    return tongTien * (1 - km); // Tính tổng tiền sau khuyến mãi
 	}
 
 	/**
@@ -197,13 +289,13 @@ public class GD_ThongKeDoanhThu extends javax.swing.JPanel {
         table.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Ngày tạo", "Giờ tạo", "Khuyến mãi", "Tổng tiền"
+                "Mã hóa đơn", "Mã nhân viên", "Mã khách hàng", "Ngày tạo", "Giờ tạo", "Tổng tiền"
             }
         ));
         table.setGridColor(new java.awt.Color(255, 255, 255));
@@ -259,14 +351,15 @@ public class GD_ThongKeDoanhThu extends javax.swing.JPanel {
         		.addComponent(jLabel1, GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
         		.addGroup(layout.createSequentialGroup()
         			.addGap(15)
-        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-        				.addComponent(chartPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
-        				.addGroup(layout.createSequentialGroup()
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
-        						.addComponent(jPanel1, 0, 0, Short.MAX_VALUE)
-        						.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE))
-        					.addGap(18)
-        					.addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)))
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+        				.addComponent(jPanel1, 0, 0, Short.MAX_VALUE)
+        				.addComponent(jPanel3, GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE))
+        			.addGap(18)
+        			.addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+        			.addContainerGap())
+        		.addGroup(Alignment.LEADING, layout.createSequentialGroup()
+        			.addGap(15)
+        			.addComponent(chartPanel, GroupLayout.DEFAULT_SIZE, 1075, Short.MAX_VALUE)
         			.addContainerGap())
         );
         layout.setVerticalGroup(
@@ -280,8 +373,8 @@ public class GD_ThongKeDoanhThu extends javax.swing.JPanel {
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE))
         				.addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, 426, GroupLayout.PREFERRED_SIZE))
-        			.addPreferredGap(ComponentPlacement.UNRELATED)
-        			.addComponent(chartPanel, GroupLayout.PREFERRED_SIZE, 23, Short.MAX_VALUE)
+        			.addGap(18)
+        			.addComponent(chartPanel, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
         			.addContainerGap())
         );
         this.setLayout(layout);
@@ -311,12 +404,13 @@ public class GD_ThongKeDoanhThu extends javax.swing.JPanel {
 				dataset.setValue(tinhTongTienTheoNgay(LocalDate.of(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)),
 						"Tổng tiền", i+ "");
 				tongDoanhThuTrongNgay += tinhTongTienTheoNgay(LocalDate.of(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i));
-				tongHoaDon += ((Long)hoaDonDao.layTongHoaDonTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue();
+				tongHoaDon += ((Long)hoaDonDao.layTongHoaDonTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue()
+						+((Long)hoaDonDao.layTongHoaDonTraTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue();
 				tongHoaDonTra += ((Long)hoaDonDao.layTongHoaDonTraTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue();
-				tongVeTra += ((Long)veDao.layTongVeHuyTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue();
+				tongVeTra += ((Long)hoaDonDao.layTongHoaDonTraTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue();
 			}
 			break;
-
+//			tongVeTra += ((Long)veDao.layTongVeHuyTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue();
 		default:
 			for (int i = 1; i <= 31; i++) {
 				dataset.setValue(tinhTongTienTheoNgay(LocalDate.of(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)),
@@ -324,7 +418,7 @@ public class GD_ThongKeDoanhThu extends javax.swing.JPanel {
 				tongDoanhThuTrongNgay += tinhTongTienTheoNgay(LocalDate.of(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i));
 				tongHoaDon += ((Long)hoaDonDao.layTongHoaDonTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue();
 				tongHoaDonTra += ((Long)hoaDonDao.layTongHoaDonTraTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue();
-				tongVeTra += ((Long)veDao.layTongVeHuyTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue();
+				tongVeTra += ((Long)hoaDonDao.layTongHoaDonTraTrongThang(jYearChooser1.getYear(), jMonthChooser1.getMonth()+1, i)).intValue();
 			}
 			break;
 		}
@@ -365,43 +459,122 @@ public class GD_ThongKeDoanhThu extends javax.swing.JPanel {
 		chartPanel.add(barpChartPanel, BorderLayout.CENTER);
 		chartPanel.validate();
 	}// GEN-LAST:event_jMonthChooser1PropertyChange
-	
+//	
+//	public double tinhTongTienTheoNgay(LocalDate ngay) {
+//        List<HoaDon> lhd = hoaDonDao.getAllHoaDonTrue();
+//        double tongTienTheoNgay = 0;
+//
+//        for (HoaDon hoaDon : lhd) {
+//            // Convert the creation date of the invoice to LocalDate
+//            LocalDate ngayTaoHoaDon = hoaDon.getNgayTao();
+//
+//            if (ngayTaoHoaDon.equals(ngay)) {
+//                List<Ve> listVe = hoaDon.getListVes();
+//                double tongTien = 0;
+//                for (Ve ve : listVe) {
+//                    if (!ve.isTrangThai())
+//                        continue;
+//                    Set<ChiTietVe> listChiTietVes = ve.getLisChiTietVes();
+//                    Ga gaChieuDi = null;
+//                    Ga gaChieuDen = null;
+//                    for (ChiTietVe ctv : listChiTietVes) {
+//                        if (ctv.isChieu())
+//                            gaChieuDi = ctv.getGa();
+//                        else
+//                            gaChieuDen = ctv.getGa();
+//                    }
+//                    tongTien += ve.getChoNgoi().getGia() * Math.abs(gaChieuDen.getId() - gaChieuDi.getId())
+//                            * (ve.getKhuyenMai() == null ? 1 : 1 - ve.getKhuyenMai().getChietKhau());
+//                }
+//                Set<KhuyenMai> listKhuyenMai = hoaDon.getLisKhuyenMais();
+//                double km = 0;
+//                for (KhuyenMai khuyenMai : listKhuyenMai) {
+//                    km += khuyenMai.getChietKhau();
+//                }
+//                tongTienTheoNgay += (tongTien * (1 - km));
+//            }
+//        }
+//        return tongTienTheoNgay;
+//    }
+
+//	public double tinhTongTienTheoNgay(LocalDate ngay) {
+//        List<HoaDon> lhd = hoaDonDao.getAllHoaDonTrue();
+//        double tongTienTheoNgay = 0;
+//
+//        for (HoaDon hoaDon : lhd) {
+//            // Convert the creation date of the invoice to LocalDate
+//            LocalDate ngayTaoHoaDon = hoaDon.getNgayTao();
+//
+//            if (ngayTaoHoaDon.equals(ngay)) {
+//                List<Ve> listVe = hoaDon.getListVes();
+//                double tongTien = 0;
+//                for (Ve ve : listVe) {
+//                    if (!ve.isTrangThai())
+//                        continue;
+//                    Set<ChiTietVe> listChiTietVes = ve.getLisChiTietVes();
+//                    Ga gaChieuDi = null;
+//                    Ga gaChieuDen = null;
+//                    for (ChiTietVe ctv : listChiTietVes) {
+//                        if (ctv.isChieu())
+//                            gaChieuDi = ctv.getGa();
+//                        else
+//                            gaChieuDen = ctv.getGa();
+//                    }
+//                    tongTien += ve.getChoNgoi().getGia() * Math.abs(gaChieuDen.getId() - gaChieuDi.getId())
+//                            * (ve.getKhuyenMai() == null ? 1 : 1 - ve.getKhuyenMai().getChietKhau());
+//                }
+//                Set<KhuyenMai> listKhuyenMai = hoaDon.getLisKhuyenMais();
+//                double km = 0;
+//                for (KhuyenMai khuyenMai : listKhuyenMai) {
+//                    km += khuyenMai.getChietKhau();
+//                }
+//                tongTienTheoNgay += (tongTien * (1 - km));
+//            }
+//        }
+//        return tongTienTheoNgay;
+//    }
 	public double tinhTongTienTheoNgay(LocalDate ngay) {
-        List<HoaDon> lhd = hoaDonDao.getAllHoaDonTrue();
-        double tongTienTheoNgay = 0;
+	    List<HoaDon> lhd = hoaDonDao.getAllHoaDonTrue();
+	    double tongTienTheoNgay = 0;
 
-        for (HoaDon hoaDon : lhd) {
-            // Convert the creation date of the invoice to LocalDate
-            LocalDate ngayTaoHoaDon = hoaDon.getNgayTao();
+	    for (HoaDon hoaDon : lhd) {
+	        // Convert the creation date of the invoice to LocalDate
+	        LocalDate ngayTaoHoaDon = hoaDon.getNgayTao();
 
-            if (ngayTaoHoaDon.equals(ngay)) {
-                List<Ve> listVe = hoaDon.getListVes();
-                double tongTien = 0;
-                for (Ve ve : listVe) {
-                    if (!ve.isTrangThai())
-                        continue;
-                    Set<ChiTietVe> listChiTietVes = ve.getLisChiTietVes();
-                    Ga gaChieuDi = null;
-                    Ga gaChieuDen = null;
-                    for (ChiTietVe ctv : listChiTietVes) {
-                        if (ctv.isChieu())
-                            gaChieuDi = ctv.getGa();
-                        else
-                            gaChieuDen = ctv.getGa();
-                    }
-                    tongTien += ve.getChoNgoi().getGia() * Math.abs(gaChieuDen.getId() - gaChieuDi.getId())
-                            * (ve.getKhuyenMai() == null ? 1 : 1 - ve.getKhuyenMai().getChietKhau());
-                }
-                Set<KhuyenMai> listKhuyenMai = hoaDon.getLisKhuyenMais();
-                double km = 0;
-                for (KhuyenMai khuyenMai : listKhuyenMai) {
-                    km += khuyenMai.getChietKhau();
-                }
-                tongTienTheoNgay += (tongTien * (1 - km));
-            }
-        }
-        return tongTienTheoNgay;
-    }
+	        if (ngayTaoHoaDon.equals(ngay)) {
+	            List<Ve> listVe = hoaDon.getListVes();
+	            double tongTien = 0;
+	            for (Ve ve : listVe) {
+	                if (!ve.isTrangThai())
+	                    continue;
+	                Set<ChiTietVe> listChiTietVes = ve.getLisChiTietVes();
+	                Ga gaChieuDi = null;
+	                Ga gaChieuDen = null;
+	                
+	                for (ChiTietVe ctv : listChiTietVes) {
+	                    if (ctv.isChieu())
+	                        gaChieuDi = ctv.getGa();
+	                    else
+	                        gaChieuDen = ctv.getGa();
+	                }
+	                
+	                // Ensure both gaChieuDi and gaChieuDen are not null before calculating
+	                if (gaChieuDi != null && gaChieuDen != null) {
+	                    tongTien += ve.getChoNgoi().getGia() * Math.abs(gaChieuDen.getId() - gaChieuDi.getId())
+	                            * (ve.getKhuyenMai() == null ? 1 : 1 - ve.getKhuyenMai().getChietKhau());
+	                }
+	            }
+	            
+	            Set<KhuyenMai> listKhuyenMai = hoaDon.getLisKhuyenMais();
+	            double km = 0;
+	            for (KhuyenMai khuyenMai : listKhuyenMai) {
+	                km += khuyenMai.getChietKhau();
+	            }
+	            tongTienTheoNgay += (tongTien * (1 - km));
+	        }
+	    }
+	    return tongTienTheoNgay;
+	}
 
 	@Override
 	protected void paintChildren(Graphics g) {
